@@ -51,14 +51,20 @@ abstract class RepositoryInterface {
   }
 
   LocalDataHandler<T>? getLocalDataHandler<T>() {
-    return localDataHandlers.containsKey(T)
-        ? localDataHandlers[T] as LocalDataHandler<T>
-        : null;
+    if (!localDataHandlers.containsKey(T)) {
+      debugPrint('No local data handler found for type $T.');
+      return null;
+    }
+
+    return localDataHandlers[T] as LocalDataHandler<T>;
   }
 
   RemoteDataHandler<T>? getRemoteDataHandler<T>() {
-    return remoteDataHandlers.containsKey(T)
-        ? remoteDataHandlers[T] as RemoteDataHandler<T>
-        : null;
+    if (!remoteDataHandlers.containsKey(T)) {
+      debugPrint('No remote data handler found for type $T.');
+      return null;
+    }
+
+    return remoteDataHandlers[T] as RemoteDataHandler<T>;
   }
 }

@@ -18,10 +18,10 @@ class Repository extends RepositoryInterface {
     final remoteDataHandler = getRemoteDataHandler<T>();
 
     if (remoteDataHandler != null) {
-      await remoteDataHandler.create(records: records);
+      return await remoteDataHandler.create(records: records);
     }
 
-    debugPrint('No remote data handler found for type $T.');
+    debugPrint('Failed to create records of type $T');
   }
 
   @override
@@ -32,13 +32,13 @@ class Repository extends RepositoryInterface {
     final RemoteDataHandler<T>? remoteDataHandler = getRemoteDataHandler<T>();
 
     if (remoteDataHandler != null) {
-      await remoteDataHandler.update(
+      return await remoteDataHandler.update(
         fieldsToUpdate: fieldsToUpdate,
         filters: filters,
       );
     }
 
-    debugPrint('No remote data handler found for type $T.');
+    debugPrint('Failed to update records of type $T');
   }
 
   @override
@@ -48,9 +48,9 @@ class Repository extends RepositoryInterface {
     final RemoteDataHandler<T>? remoteDataHandler = getRemoteDataHandler<T>();
 
     if (remoteDataHandler != null) {
-      await remoteDataHandler.delete(filters: filters);
+      return await remoteDataHandler.delete(filters: filters);
     }
-    debugPrint('No remote data handler found for type $T.');
+    debugPrint('Failed to delete records of type $T');
   }
 
   @override
@@ -62,7 +62,7 @@ class Repository extends RepositoryInterface {
     if (remoteDataHandler != null) {
       return await remoteDataHandler.read(filters: filters);
     }
-    debugPrint('No remote data handler found for type $T.');
+    debugPrint('Failed to read records of type $T');
 
     return [];
   }
@@ -76,7 +76,7 @@ class Repository extends RepositoryInterface {
     if (remoteDataHandler != null) {
       return remoteDataHandler.stream(filters: filters);
     }
-    debugPrint('No remote data handler found for type $T.');
+    debugPrint('Failed to stream records of type $T');
 
     return const Stream.empty();
   }
